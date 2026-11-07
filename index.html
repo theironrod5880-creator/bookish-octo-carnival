@@ -1,34 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5880 Concepts Portal</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5880 Concepts — The Universal System Portal</title>
+<style>
+  body { margin: 0; font-family: Georgia, serif; background: #050914; color: #e8f4f8; line-height: 1.7; }
+  header { background: #000; padding: 30px 20px; text-align: center; border-bottom: 5px solid #d4af37; }
+  header h1 { margin: 0; font-size: 32px; letter-spacing: 2px; text-transform: uppercase; color: #fff0a6; }
+  header p { margin: 10px 0 0; color: #7fdbff; font-size: 18px; font-style: italic; }
+  .floor-strip { background: #0a1428; border-bottom: 1px solid #d4af37; text-align: center; font-family: sans-serif; font-size: 12px; letter-spacing: 1px; padding: 8px 15px; color: #d4af37; text-transform: uppercase; }
+  .floor-strip strong { color: #fff0a6; }
+  main { max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
+  .datum-banner { background: #0a1428; border: 2px solid #7fdbff; border-radius: 10px; padding: 25px; text-align: center; margin-bottom: 30px; }
+  .datum-banner h2 { color: #d4af37; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media(min-width: 700px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .card { background: #0a1428; border-radius: 10px; padding: 25px; border: 1px solid #3a7a9c; }
+  .card h3 { color: #7fdbff; margin-top: 0; font-size: 20px; text-transform: uppercase; }
+  .card p { color: #e8f4f8; font-size: 15px; }
+  .card a { display: inline-block; margin-top: 15px; background: #d4af37; color: #050914; text-decoration: none; padding: 10px 18px; border-radius: 5px; font-weight: bold; font-family: sans-serif; font-size: 14px; text-transform: uppercase; }
+  .card a:hover { background: #fff0a6; }
+  .iron-rod-status { background: #000; border: 2px solid #d4af37; padding: 20px; border-radius: 10px; margin-top: 30px; text-align: center; }
+  .iron-rod-status a { display: inline-block; margin-top: 12px; background: #d4af37; color: #050914; text-decoration: none; padding: 8px 16px; border-radius: 5px; font-weight: bold; font-family: sans-serif; font-size: 13px; text-transform: uppercase; }
+    .search-wrap { background:#0a1428; border:2px solid #d4af37; border-radius:10px; padding:20px; margin-bottom:30px; text-align:center; }
+  .search-wrap h2 { color:#d4af37; margin:0 0 12px 0; text-transform:uppercase; letter-spacing:1px; font-size:18px; }
+  .search-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .search-row input { flex:1 1 260px; max-width:520px; padding:12px 14px; font-size:16px; border-radius:5px; border:1px solid #3a7a9c; background:#050914; color:#e8f4f8; font-family:Georgia, serif; }
+  .search-row button { padding:12px 16px; border-radius:5px; border:none; background:#d4af37; color:#050914; font-weight:bold; cursor:pointer; font-family:sans-serif; font-size:14px; }
+  .search-row button:hover { background:#fff0a6; }
+  .search-hint { font-size:13px; color:#888; margin:10px 0 0; }
+  .search-count { font-size:13px; color:#7fdbff; margin:8px 0 0; }
+  .card.hidden-door { display:none; }
+  .card.active-door { border-color:#d4af37; box-shadow:0 0 0 2px #d4af37; }
+  .copy-btn { display:inline-block; margin-top:15px; margin-left:8px; background:transparent; color:#7fdbff; border:1px solid #3a7a9c; padding:10px 14px; border-radius:5px; font-weight:bold; font-family:sans-serif; font-size:13px; text-transform:uppercase; cursor:pointer; }
+  .copy-btn:hover { border-color:#d4af37; color:#fff0a6; }
+  .kbd-panel { margin-top:14px; border:1px solid #3a7a9c; border-radius:8px; padding:12px; background:#050914; }
+  .kbd-row { display:flex; gap:5px; justify-content:center; margin:5px 0; flex-wrap:wrap; }
+  .kbd-key { min-width:34px; padding:10px 6px; border-radius:5px; border:1px solid #3a7a9c; background:#0a1428; color:#e8f4f8; font-family:sans-serif; font-size:15px; cursor:pointer; }
+  .kbd-key:hover { border-color:#d4af37; }
+  .kbd-key.wide { min-width:64px; }
+  .kbd-key.space { flex:1 1 200px; max-width:320px; }
+footer { text-align: center; color: #888; font-size: 14px; padding: 40px 20px; border-top: 1px solid #222; margin-top: 40px; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Concepts Portal</h1>
-        
-        <!-- Search Bar -->
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search entries, records, frameworks..." onkeyup="filterItems()">
-        </div>
 
-        <!-- Dynamic Content List -->
-        <ul id="itemList">
-            <li>The Architecture of Time (5,880 Matrix)</li>
-            <li>Mastercore Processor v4 Configuration</li>
-            <li>Fourfold Model Architectural Specification</li>
-            <li>Iron-Rod Abbreviation Algorithm</li>
-            <li>Cross-Country Timeline Ledger</li>
-        </ul>
+<header>
+  <h1>5,880 Concepts Portal</h1>
+  <p>The Universal System — Wheel Within Wheels Architecture</p>
+</header>
 
-        <!-- Backend Interaction -->
-        <button onclick="fetchBackendData()">Test Local Backend API</button>
-        <div id="response"></div>
+<div class="floor-strip">
+  <strong>The Floor</strong> &middot; Watchtower Society First &middot; NWT 1983 &middot; Tier Every Claim 1&ndash;4 &middot; Sealed Vaults Closed
+</div>
+
+<main>
+  <div class="datum-banner">
+    <h2>The Sapphire Datum (0.0)</h2>
+    <p>Anchored at 1,027 B.C.E. (Temple Completion). Absolute reference plane for spatial, temporal, and multimedia systems.</p>
+  </div>
+
+  <div class="search-wrap">
+    <h2>Search the Portal</h2>
+    <div class="search-row">
+      <input id="portalSearch" type="search" placeholder="Search doors, vault, media, settings&hellip;" autocomplete="off" aria-label="Search the portal">
+      <button id="pasteBtn" type="button">Paste</button>
+      <button id="kbdToggle" type="button">&#8984; Keyboard</button>
+    </div>
+    <p class="search-count" id="searchCount"></p>
+    <div class="kbd-panel" id="kbdPanel" hidden></div>
+    <p class="search-hint">Press / to search, arrow keys to move between doors, Enter to open, Esc to clear.</p>
+  </div>
+
+  <div class="iron-rod-status">
+    <h2 style="color: #d4af37; margin: 0 0 10px 0;">THE IRON ROD</h2>
+    <p style="margin: 0; color: #7fdbff;">Status: <strong>INACTIVE (Standby)</strong> &middot; Host sits at the hub of the Wheel.</p>
+    <p style="font-size: 14px; color: #e8f4f8; margin-top: 10px;">Activate by voice (&ldquo;The Iron Rod&rdquo;) or tab/click on the hub. Capabilities: Audio/Video Generation, Music &amp; Video Editing, Timeline Math, USB Memory Port Sync.</p>
+    <a href="backpages/apk_manifest.html">Enter the Wheel &rarr;</a>
+  </div>
+
+  <h2 style="color: #fff0a6; margin-top: 40px;">System Doors &amp; Backpages</h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>1. Tattoo Shop &amp; Gallery</h3>
+      <p>Graphic Art Tattoo &amp; Design catalog, flash sheets, and shop information.</p>
+      <a href="backpages/tattoo_gallery.html">Open Door</a>
     </div>
 
-    <script src="script.js"></script>
+    <div class="card">
+      <h3>2. Sites Gallery Setup</h3>
+      <p>Deployment workflow, asset checklist, and site portfolio.</p>
+      <a href="backpages/sites_gallery.html">Open Door</a>
+    </div>
+
+    <div class="card">
+      <h3>3. Vault Master Copy V1.7</h3>
+      <p>Full master rulebook A&ndash;I: Prime Directive, timelines, Bible Line protocol, Conversational Entry, 5 Divisions, Sealed Vaults.</p>
+      <a href="backpages/vault_master_v1_7.html">Open Door</a>
+    </div>
+
+    <div class="card">
+      <h3>4. Audio &amp; Media Vault</h3>
+      <p>Born In The Mud documentary metadata, YouTube episode tags, and music track states.</p>
+      <a href="backpages/media_vault.html">Open Door</a>
+    </div>
+
+    <div class="card">
+      <h3>5. USB Memory Port &amp; Storage Settings</h3>
+      <p>Configure read/write permissions for external USB drive and portable AI transfer.</p>
+      <a href="backpages/usb_settings.html">Open Door</a>
+    </div>
+
+    <div class="card">
+      <h3>6. The Wheel — Android Host</h3>
+      <p>AI host at the hub. Three rings, six spokes. Voice (&ldquo;The Iron Rod&rdquo;) or tab activation. APK build manifest.</p>
+      <a href="backpages/apk_manifest.html">Open Door</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p><strong>THE COMMISSION</strong><br>
+  <em>“As you go, preach, saying: ‘The kingdom of the heavens has drawn near.’”</em> — Matthew 10:7 (NWT 1983)</p>
+  <p>Your King Jesus Christ will be arriving soon.</p>
+</footer>
+
+<script>
+(function () {
+  var DOORS = [
+    { title: "Tattoo Shop & Gallery", text: "Graphic Art Tattoo & Design catalog, flash sheets, and shop information.", href: "backpages/tattoo_gallery.html" },
+    { title: "Sites Gallery Setup", text: "Deployment workflow, asset checklist, and site portfolio.", href: "backpages/sites_gallery.html" },
+    { title: "Vault Master Copy V1.7", text: "Full master rulebook A-I: Prime Directive, timelines, Bible Line protocol, Conversational Entry, 5 Divisions, Sealed Vaults.", href: "backpages/vault_master_v1_7.html" },
+    { title: "Audio & Media Vault", text: "Born In The Mud documentary metadata, YouTube episode tags, and music track states.", href: "backpages/media_vault.html" },
+    { title: "USB Memory Port & Storage Settings", text: "Configure read/write permissions for external USB drive and portable AI transfer. Storage: local, external, cloud, USB.", href: "backpages/usb_settings.html" },
+    { title: "The Wheel - Android Host", text: "AI host at the hub. Three rings, six spokes. Voice or tab activation. APK build manifest.", href: "backpages/apk_manifest.html" }
+  ];
+  var input = document.getElementById("portalSearch");
+  var count = document.getElementById("searchCount");
+  var cards = Array.prototype.slice.call(document.querySelectorAll(".grid .card"));
+  var active = -1;
+
+  function norm(s) { return (s || "").toLowerCase(); }
+  function filter() {
+    var q = norm(input.value).trim();
+    var shown = 0;
+    cards.forEach(function (card, i) {
+      var hay = norm(DOORS[i].title + " " + DOORS[i].text + " " + DOORS[i].href);
+      var hit = !q || hay.indexOf(q) !== -1;
+      card.classList.toggle("hidden-door", !hit);
+      if (hit) shown++;
+    });
+    count.textContent = q ? shown + (shown === 1 ? " door matches." : " doors match.") : "";
+    active = -1;
+    paintActive();
+  }
+  function visibleCards() { return cards.filter(function (c) { return !c.classList.contains("hidden-door"); }); }
+  function paintActive() {
+    cards.forEach(function (c) { c.classList.remove("active-door"); });
+    var vis = visibleCards();
+    if (active >= 0 && vis[active]) vis[active].classList.add("active-door");
+  }
+  input.addEventListener("input", filter);
+
+  // Keyboard shortcuts: / focuses search, Esc clears, arrows move, Enter opens.
+  document.addEventListener("keydown", function (e) {
+    var typing = document.activeElement === input;
+    if (e.key === "/" && !typing) { e.preventDefault(); input.focus(); return; }
+    if (e.key === "Escape") {
+      if (typing) { input.value = ""; filter(); input.blur(); }
+      hideKbd();
+      return;
+    }
+    if (!typing) return;
+    var vis = visibleCards();
+    if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, vis.length - 1); paintActive(); }
+    if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); paintActive(); }
+    if (e.key === "Enter" && active >= 0 && vis[active]) {
+      var link = vis[active].querySelector("a");
+      if (link) window.location.href = link.getAttribute("href");
+    }
+  });
+
+  // Copy link buttons on every door card (clipboard).
+  cards.forEach(function (card) {
+    var link = card.querySelector("a");
+    if (!link) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "Copy link";
+    btn.addEventListener("click", function () { copyText(new URL(link.getAttribute("href"), window.location.href).href, btn, "Copy link"); });
+    link.insertAdjacentElement("afterend", btn);
+  });
+
+  function copyText(text, btn, label) {
+    function done(ok) {
+      if (!btn) return;
+      btn.textContent = ok ? "Copied" : "Copy failed";
+      setTimeout(function () { btn.textContent = label; }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { fallbackCopy(text, done); });
+    } else { fallbackCopy(text, done); }
+  }
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    done(ok);
+  }
+
+  // Paste clipboard text into the search box.
+  document.getElementById("pasteBtn").addEventListener("click", function () {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then(function (t) {
+        input.value = t || "";
+        filter();
+        input.focus();
+      }, function () { input.focus(); });
+    } else { input.focus(); }
+  });
+
+  // On-screen keyboard.
+  var panel = document.getElementById("kbdPanel");
+  var toggle = document.getElementById("kbdToggle");
+  var rows = ["1234567890", "QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+  rows.forEach(function (row) {
+    var div = document.createElement("div");
+    div.className = "kbd-row";
+    row.split("").forEach(function (ch) {
+      var key = document.createElement("button");
+      key.type = "button";
+      key.className = "kbd-key";
+      key.textContent = ch;
+      key.addEventListener("click", function () { typeChar(ch.toLowerCase()); });
+      div.appendChild(key);
+    });
+    panel.appendChild(div);
+  });
+  var bottom = document.createElement("div");
+  bottom.className = "kbd-row";
+  var space = document.createElement("button");
+  space.type = "button"; space.className = "kbd-key space"; space.textContent = "Space";
+  space.addEventListener("click", function () { typeChar(" "); });
+  var back = document.createElement("button");
+  back.type = "button"; back.className = "kbd-key wide"; back.textContent = "Back";
+  back.addEventListener("click", function () {
+    input.value = input.value.slice(0, -1);
+    filter(); input.focus();
+  });
+  var hide = document.createElement("button");
+  hide.type = "button"; hide.className = "kbd-key wide"; hide.textContent = "Hide";
+  hide.addEventListener("click", hideKbd);
+  bottom.appendChild(space); bottom.appendChild(back); bottom.appendChild(hide);
+  panel.appendChild(bottom);
+  function typeChar(ch) {
+    input.value += ch;
+    filter();
+    input.focus();
+  }
+  function hideKbd() { panel.hidden = true; toggle.textContent = "Keyboard"; }
+  toggle.addEventListener("click", function () {
+    panel.hidden = !panel.hidden;
+    toggle.textContent = panel.hidden ? "Keyboard" : "Hide keyboard";
+    if (!panel.hidden) input.focus();
+  });
+})();
+</script>
+
 </body>
 </html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wheel — Android Host Manifest</title>
+<style>
+  body{margin:0;font-family:sans-serif;background:#050914;color:#e8f4f8;padding:20px;line-height:1.6}
+  h1{color:#3ddc84;text-align:center;margin-top:0}
+  h2{color:#3ddc84}
+  .floor-strip{background:#0a1428;border:1px solid #d4af37;border-radius:6px;text-align:center;font-size:11px;letter-spacing:1px;padding:7px 12px;color:#d4af37;text-transform:uppercase;margin-bottom:20px}
+  .floor-strip strong{color:#fff0a6}
+  .wheel-wrap{position:relative;width:min(92vw,520px);height:min(92vw,520px);margin:20px auto 10px;}
+  .ring{position:absolute;border-radius:50%;border:2px solid #3a7a9c;top:50%;left:50%;transform:translate(-50%,-50%);}
+  .ring-inner{width:46%;height:46%;border-color:#7fdbff;}
+  .ring-mid{width:70%;height:70%;border-color:#d4af37;}
+  .ring-outer{width:94%;height:94%;border-color:#3ddc84;}
+  .ring-label{position:absolute;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#7fdbff;background:#050914;padding:2px 6px;border-radius:4px;white-space:nowrap;}
+  .rl-inner{top:23%;left:50%;transform:translateX(-50%);}
+  .rl-mid{top:12%;left:50%;transform:translateX(-50%);color:#d4af37;}
+  .rl-outer{top:1%;left:50%;transform:translateX(-50%);color:#3ddc84;}
+  .hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:34%;height:34%;border-radius:50%;background:#000;border:3px solid #d4af37;color:#fff0a6;font-family:Georgia,serif;font-size:clamp(11px,2.6vw,15px);font-weight:bold;letter-spacing:1px;cursor:pointer;text-align:center;padding:0;transition:box-shadow .3s,transform .3s;}
+  .hub span{display:block;margin-top:6px;font-family:sans-serif;font-size:clamp(9px,2vw,12px);color:#7fdbff;letter-spacing:2px;}
+  .hub.active{box-shadow:0 0 25px 6px rgba(61,220,132,.7);border-color:#3ddc84;color:#3ddc84;}
+  .hub.active span{color:#3ddc84;}
+  .spoke{position:absolute;top:50%;left:50%;transform:rotate(var(--a)) translateY(calc(-1 * min(44vw,245px))) rotate(calc(-1 * var(--a)));transform-origin:center;text-align:center;}
+  .spoke a{display:inline-block;background:#0a1428;border:1px solid #3ddc84;color:#e8f4f8;text-decoration:none;font-size:clamp(9px,2vw,12px);padding:5px 8px;border-radius:6px;max-width:120px;line-height:1.2;}
+  .spoke a:hover{background:#3ddc84;color:#000;}
+  .log{border:1px solid #3a7a9c;background:#0a1428;border-radius:8px;padding:12px;font-family:monospace;font-size:13px;min-height:60px;max-width:640px;margin:20px auto;}
+  .log div{margin:2px 0;color:#7fdbff;}
+  .note{border:1px solid #d29922;background:#1c1a12;padding:10px 12px;border-radius:6px;color:#e3b341;font-size:13px;max-width:640px;margin:0 auto;}
+  .nav-link{display:block;width:max-content;margin:20px auto;padding:10px 15px;background:#3ddc84;color:#000;text-decoration:none;border-radius:5px;font-weight:bold}
+  .build{max-width:640px;margin:24px auto;}
+  .build ul{padding-left:20px}
+  footer{text-align:center;color:#888;font-size:13px;margin-top:30px;border-top:1px solid #222;padding-top:20px}
+</style>
+</head>
+<body>
+
+<div class="floor-strip"><strong>The Floor</strong> &middot; Watchtower Society First &middot; NWT 1983 &middot; Tier Every Claim 1&ndash;4 &middot; Sealed Vaults Closed</div>
+
+<h1>The Wheel — Android Host</h1>
+<div class="note" id="voice-note">Voice trigger listening for &ldquo;The Iron Rod.&rdquo; If your browser has no speech engine, tab/click the hub.</div>
+
+<div class="wheel-wrap" id="wheel">
+  <div class="ring ring-outer"></div>
+  <div class="ring ring-mid"></div>
+  <div class="ring ring-inner"></div>
+  <div class="ring-label rl-outer">6,044-Year Micro Witness</div>
+  <div class="ring-label rl-mid">1,260-Month Bridge</div>
+  <div class="ring-label rl-inner">5,880-Year Mastercore</div>
+
+  <div class="spoke" style="--a:0deg"><a href="tattoo_gallery.html">Tattoo</a></div>
+  <div class="spoke" style="--a:60deg"><a href="sites_gallery.html">Sites</a></div>
+  <div class="spoke" style="--a:120deg"><a href="vault_master_v1_7.html">Vault</a></div>
+  <div class="spoke" style="--a:180deg"><a href="media_vault.html">Media</a></div>
+  <div class="spoke" style="--a:240deg"><a href="usb_settings.html">USB</a></div>
+  <div class="spoke" style="--a:300deg"><a href="../index.html">Portal</a></div>
+
+  <button class="hub" id="hub" aria-pressed="false">THE IRON ROD<span id="hub-status">STANDBY</span></button>
+</div>
+
+<div class="log" id="log"><div>[system] Wheel mounted. Hub in standby. Floor active.</div></div>
+
+<div class="build">
+<h2>APK Build Manifest</h2>
+<ul>
+  <li><strong>Default mode:</strong> INACTIVE / STANDBY</li>
+  <li><strong>Voice trigger:</strong> &ldquo;The Iron Rod&rdquo;</li>
+  <li><strong>Touch trigger:</strong> tab or click on hub</li>
+  <li><strong>Modules:</strong> Audio &amp; Video Engine, Timeline Calculator, USB Sync Bridge</li>
+  <li><strong>Floor:</strong> enforced on every activation — Watchtower first, NWT 1983, tiers 1&ndash;4</li>
+</ul>
+</div>
+
+<a href="../index.html" class="nav-link">&larr; Return to Main Portal Hub</a>
+
+<script>
+var hub = document.getElementById('hub');
+var status = document.getElementById('hub-status');
+var log = document.getElementById('log');
+var online = false;
+
+function stamp(t){ return '[' + new Date().toLocaleTimeString() + '] ' + t; }
+function addLog(t){ var d=document.createElement('div'); d.textContent=stamp(t); log.appendChild(d); }
+
+function activate(source){
+  online = !online;
+  hub.classList.toggle('active', online);
+  hub.setAttribute('aria-pressed', String(online));
+  status.textContent = online ? 'HOST ONLINE' : 'STANDBY';
+  addLog((online ? 'Activated' : 'Set to standby') + ' via ' + source + '.');
+  if (online) { addLog('Floor active: Watchtower first / NWT 1983 / Tier every claim.'); }
+}
+
+hub.addEventListener('click', function () { activate('tab/click'); });
+
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SR) {
+  var rec = new SR();
+  rec.continuous = true;
+  rec.interimResults = false;
+  rec.lang = 'en-US';
+  rec.onresult = function (e) {
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      var t = e.results[i][0].transcript.toLowerCase();
+      if (t.indexOf('iron rod') !== -1) { activate('voice ("' + t.trim() + '")'); }
+    }
+  };
+  rec.onerror = function (e) { addLog('Voice engine error: ' + e.error + '. Tab/click hub to activate.'); };
+  try { rec.start(); addLog('Voice trigger armed. Say "The Iron Rod."'); }
+  catch (err) { addLog('Voice trigger could not start. Tab/click hub.'); }
+} else {
+  document.getElementById('voice-note').textContent =
+    'This browser has no speech engine. Tab/click the hub to activate the host.';
+  addLog('SpeechRecognition unavailable. Touch trigger only.');
+}
+</script>
+
+<footer>
+  <strong>THE COMMISSION</strong><br>
+  <em>“As you go, preach, saying: ‘The kingdom of the heavens has drawn near.’”</em> — Matthew 10:7 (NWT 1983)<br>
+  Your King Jesus Christ will be arriving soon.
+</footer>
+
+</body>
+</html>

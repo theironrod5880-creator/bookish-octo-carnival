@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sites Gallery & Deployment Setup</title>
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0d1117;color:#c9d1d9;padding:20px;line-height:1.6}
+h1,h2{color:#58a6ff}
+pre{background:#161b22;padding:15px;border-radius:6px;border:1px solid #30363d;color:#79c0ff;overflow-x:auto;font-size:13px}
+.ok{border:1px solid #238636;background:#0d1a12;padding:12px;border-radius:6px;color:#3fb950;margin:15px 0}
+.notice{border:1px solid #d29922;background:#1c1a12;padding:12px;border-radius:6px;color:#e3b341;margin:15px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th,td{border:1px solid #30363d;padding:8px;text-align:left}
+th{background:#161b22;color:#58a6ff}
+.floor-strip{background:#0a1428;border:1px solid #d4af37;border-radius:6px;text-align:center;font-size:11px;letter-spacing:1px;padding:7px 12px;color:#d4af37;text-transform:uppercase;margin-bottom:20px}
+.floor-strip strong{color:#fff0a6}
+.nav-link{display:inline-block;margin-top:20px;padding:10px 15px;background:#238636;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold}
+footer{text-align:center;color:#888;font-size:13px;margin-top:30px;border-top:1px solid #222;padding-top:20px}
+</style>
+</head>
+<body>
+
+<div class="floor-strip"><strong>The Floor</strong> &middot; Watchtower Society First &middot; NWT 1983 &middot; Tier Every Claim 1&ndash;4 &middot; Sealed Vaults Closed</div>
+
+<h1>Website Gallery — Deployment</h1>
+
+<h2>Deployment Steps</h2>
+<ol>
+  <li>Commit the repository tree as-is. <code>index.html</code> already sits at repo root.</li>
+  <li>Confirm <code>.github/workflows/pages-unzip.yml</code> exists (it does — shipped with this build).</li>
+  <li>Repository Settings &gt; Pages &gt; Source: <strong>GitHub Actions</strong>.</li>
+  <li>Push to <code>main</code>. The workflow deploys the root directly.</li>
+</ol>
+
+<div class="ok">
+  <strong>Tier 1:</strong> <code>site.zip</code> is <em>optional</em>. The workflow unzips it only if present, then deploys the root regardless. The old "upload site.zip" step is no longer a prerequisite.
+</div>
+
+<h2>Deploy Workflow (shipped)</h2>
+<pre>name: Deploy Portal to GitHub Pages
+on: [push to main, manual]
+jobs: checkout -&gt; optional unzip -&gt; configure-pages -&gt; upload artifact -&gt; deploy</pre>
+
+<h2>Asset Checklist</h2>
+<table>
+<tr><th>Asset</th><th>Path</th><th>State</th></tr>
+<tr><td>Portal hub</td><td><code>index.html</code></td><td>Present</td></tr>
+<tr><td>Agent config</td><td><code>iron_rod_config.json</code></td><td>Present</td></tr>
+<tr><td>Backpages (6)</td><td><code>backpages/*.html</code></td><td>Present</td></tr>
+<tr><td>Deploy workflow</td><td><code>.github/workflows/pages-unzip.yml</code></td><td>Present</td></tr>
+<tr><td>Audio tracks (9)</td><td><code>media/*.mp3|m4a</code></td><td>Awaiting files</td></tr>
+<tr><td>Tattoo images</td><td><code>images/*.jpg</code></td><td>Awaiting files</td></tr>
+<tr><td><code>site.zip</code></td><td>root</td><td>Optional — not required</td></tr>
+</table>
+
+<div class="notice">Binary assets are the only remaining gap. Pages degrade honestly until each file lands: media players read <em>AWAITING FILE</em>, tattoo slots read <em>AWAITING IMAGE</em>.</div>
+
+<a href="../index.html" class="nav-link">&larr; Return to Main Portal Hub</a>
+
+<footer>
+  <strong>THE COMMISSION</strong><br>
+  <em>“As you go, preach, saying: ‘The kingdom of the heavens has drawn near.’”</em> — Matthew 10:7 (NWT 1983)<br>
+  Your King Jesus Christ will be arriving soon.
+</footer>
+
+</body>
+</html>

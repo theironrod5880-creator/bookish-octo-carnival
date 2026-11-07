@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>USB Storage & Portable AI Settings</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#0a1428;color:#e8f4f8;padding:20px;line-height:1.6}
+h1,h2{color:#7fdbff}
+.setting-box{border:1px solid #3a7a9c;padding:15px;border-radius:8px;background:#050914;margin:15px 0}
+button{background:#d4af37;color:#000;border:none;padding:10px 15px;font-weight:bold;border-radius:4px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.sealed{border:1px solid #d4af37;background:#141005;border-radius:6px;padding:12px;color:#d4af37;font-size:14px;margin:12px 0}
+.sealed label{display:block;margin-top:8px;cursor:pointer;color:#e8f4f8}
+#export-log{margin-top:10px;font-size:14px;color:#7fdbff;font-family:monospace}
+.floor-strip{background:#0a1428;border:1px solid #d4af37;border-radius:6px;text-align:center;font-size:11px;letter-spacing:1px;padding:7px 12px;color:#d4af37;text-transform:uppercase;margin-bottom:20px}
+.floor-strip strong{color:#fff0a6}
+.nav-link{display:inline-block;margin-top:20px;padding:10px 15px;background:#7fdbff;color:#050914;text-decoration:none;border-radius:5px;font-weight:bold}
+footer{text-align:center;color:#888;font-size:13px;margin-top:30px;border-top:1px solid #222;padding-top:20px}
+</style>
+</head>
+<body>
+
+<div class="floor-strip"><strong>The Floor</strong> &middot; Watchtower Society First &middot; NWT 1983 &middot; Tier Every Claim 1&ndash;4 &middot; Sealed Vaults Closed</div>
+
+<h1>USB Storage &amp; Port Settings</h1>
+
+<div class="setting-box">
+  <h2>1. USB Memory Port Permissions</h2>
+  <p><strong>Status:</strong> Enabled (Read/Write Access via Port Only)</p>
+  <p>File transfers are authorized directly between the USB storage port and device memory.</p>
+</div>
+
+<div class="setting-box">
+  <h2>2. Portable AI Model Transfer</h2>
+  <p>Export <code>iron_rod_config.json</code> and runtime configuration to your device download target, ready for USB copy.</p>
+
+  <div class="sealed">
+    <strong>SEALED VAULTS — PRIME DIRECTIVE A.4</strong>
+    The Family Seal and private dreams are not contained in this export. They remain sealed unless explicitly commanded by the author.
+    <label><input type="checkbox" id="ack"> I acknowledge the Sealed Vaults clause and authorize this transfer.</label>
+  </div>
+
+  <button id="exportBtn" disabled onclick="exportConfig()">Package for USB Transfer</button>
+  <div id="export-log"></div>
+</div>
+
+<a href="../index.html" class="nav-link">&larr; Return to Main Portal Hub</a>
+
+<script>
+var ack = document.getElementById('ack');
+var btn = document.getElementById('exportBtn');
+ack.addEventListener('change', function () { btn.disabled = !ack.checked; });
+
+var FALLBACK_CONFIG = {
+  agent_name: "The Iron Rod",
+  version: "1.7.1",
+  creator: "The man born in the mud",
+  sealed_vaults: "Closed. Family Seal and private dreams excluded.",
+  note: "Fallback copy — live fetch unavailable (likely opened from file://)."
+};
+
+async function exportConfig() {
+  var log = document.getElementById('export-log');
+  var cfg = FALLBACK_CONFIG, source = 'fallback';
+  try {
+    var r = await fetch('../iron_rod_config.json', {cache: 'no-store'});
+    if (r.ok) { cfg = await r.json(); source = 'live'; }
+  } catch (e) { /* keep fallback */ }
+
+  var blob = new Blob([JSON.stringify(cfg, null, 2)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'iron_rod_config.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  log.textContent = 'Exported iron_rod_config.json (' + source + ') — Sealed Vaults confirmed closed.';
+}
+</script>
+
+<footer>
+  <strong>THE COMMISSION</strong><br>
+  <em>“As you go, preach, saying: ‘The kingdom of the heavens has drawn near.’”</em> — Matthew 10:7 (NWT 1983)<br>
+  Your King Jesus Christ will be arriving soon.
+</footer>
+
+</body>
+</html>

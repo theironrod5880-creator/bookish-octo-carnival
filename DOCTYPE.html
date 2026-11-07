@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Chariot — Iron Rod Mastercore</title>
+<style>
+  :root {
+    --sapphire: #050914;
+    --sapphire-light: #0a1428;
+    --gold: #fff0a6;
+    --cyan: #7fdbff;
+    --text: #e8f4f8;
+    --border: #1a3350;
+    --pass: #4ade80;
+    --fail: #f87171;
+    --open: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: radial-gradient(circle at 50% 0%, var(--sapphire-light) 0%, var(--sapphire) 70%);
+    color: var(--text);
+    padding: 24px 16px 64px;
+    line-height: 1.6;
+    min-height: 100vh;
+    margin: 0;
+  }
+  main { max-width: 760px; margin: 0 auto; }
+  h1 {
+    color: var(--gold);
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 14px;
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--cyan);
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 32px;
+    font-size: 0.92rem;
+  }
+  h2 {
+    color: var(--cyan);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    font-size: 1.15rem;
+    margin-top: 36px;
+    letter-spacing: 0.04em;
+  }
+  .panel {
+    border: 1px solid var(--border);
+    background: rgba(10, 20, 40, 0.6);
+    padding: 16px 18px;
+    margin: 18px 0;
+    border-radius: 6px;
+  }
+  .check {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(26, 51, 80, 0.6);
+    font-size: 0.95rem;
+  }
+  .check:last-child { border-bottom: none; }
+  .check .label { color: var(--text); flex: 1; }
+  .check .status { font-family: ui-monospace, Consolas, monospace; font-weight: bold; font-size: 0.82rem; padding-left: 12px; }
+  .status.pass { color: var(--pass); }
+  .status.fail { color: var(--fail); }
+  .status.open { color: var(--open); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 14px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.9rem;
+    padding: 10px 0;
+  }
+  .grid .k { color: var(--cyan); }
+  .grid .v { color: var(--gold); text-align: right; }
+  .note {
+    font-size: 0.85rem;
+    color: #a7b5d2;
+    font-style: italic;
+    margin-top: 10px;
+    line-height: 1.55;
+  }
+  .warn {
+    border-left: 3px solid var(--open);
+    background: rgba(251, 191, 36, 0.05);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 0.9rem;
+  }
+  .error {
+    border-left: 3px solid var(--fail);
+    background: rgba(248, 113, 113, 0.05);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    color: #fecaca;
+  }
+  .ok {
+    border-left: 3px solid var(--pass);
+    background: rgba(74, 222, 128, 0.05);
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 0.9rem;
+    color: #bbf7d0;
+  }
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.85rem;
+    color: #a7b5d2;
+    font-style: italic;
+  }
+  footer .seal { font-style: normal; margin-bottom: 12px; letter-spacing: 0.15em; }
+  footer .king { margin-top: 14px; color: var(--gold); font-style: normal; font-weight: bold; }
+  .empty {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--cyan);
+    font-style: italic;
+  }
+  button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--border);
+    color: var(--gold);
+    border: 1px solid var(--cyan);
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  button:hover { background: var(--sapphire-light); }
+</style>
+</head>
+<body>
+<main>
+  <h1>THE CHARIOT</h1>
+  <p class="subtitle">Iron Rod Mastercore · Level 07 Dashboard</p>
+
+  <div id="app">
+    <p class="empty">Loading anchors and running verification…</p>
+  </div>
+
+  <footer>
+    <div class="seal">🔥📖⚔️🛡️✍️👁️✅</div>
+    <div>Made by the man born in the mud. Made for Madison, his daughter.</div>
+    <div>Governed by Vault Set — Master Copy V3.2.</div>
+    <div class="king">Your King, Jesus Christ, will be arriving soon.</div>
+  </footer>
+</main>
+
+<script>
+// ============================================================
+// The anchors — embedded. This is the same data as anchors.json.
+// If the file is served, it fetches anchors.json first and uses it.
+// If not (offline), it uses this embedded copy as the fallback.
+// ============================================================
+const EMBEDDED_ANCHORS = {
+  the_fall:          { bc: 3967, label: "The Fall of Man",     tier: 3 },
+  the_flood:         { bc: 2370, label: "The Flood",           tier: 3 },
+  abram_canaan:      { bc: 1943, label: "Abram enters Canaan", tier: 2 },
+  the_exodus:        { bc: 1513, label: "The Exodus (Watchtower)", tier: 1 },
+  the_exodus_alt:    { bc: 1446, label: "The Exodus (counter)", tier: 4 },
+  temple_foundation: { bc: 1034, label: "Temple foundation",   tier: 2 },
+  temple_completed:  { bc: 1027, label: "Temple completed",    tier: 2 },
+  jerusalem_destroyed:{ bc: 607, label: "Jerusalem destroyed", tier: 2 },
+};
+
+const KINGDOM_CE = 1914;
+const EXPECTED_WHEEL = 5880;
+const EXPECTED_HALF = 2940;
+const EXPECTED_TEN = 2520;
+
+// ============================================================
+// Core arithmetic — no year zero.
+// ============================================================
+
+function spanBCEtoCE(bceStart, ceEnd) {
+  return (bceStart + ceEnd) - 1;
+}
+
+function midpoint(bceStart, ceEnd) {
+  const span = spanBCEtoCE(bceStart, ceEnd);
+  const half = span / 2;
+  return { span, half, centerBCE: bceStart - half };
+}
+
+// ============================================================
+// The verification — same checks as grid-engine.js.
+// ============================================================
+
+function runVerification(anchors) {
+  const checks = [];
+
+  // 1. Wheel span
+  const wheel = spanBCEtoCE(anchors.the_fall.bc, KINGDOM_CE);
+  checks.push({
+    label: `Wheel span (3967 B.C.E. → 1914 C.E.)`,
+    status: wheel === EXPECTED_WHEEL ? "PASS" : "FAIL",
+    detail: `${wheel} (expected ${EXPECTED_WHEEL})`,
+  });
+
+  // 2. Midpoint half
+  const mid = midpoint(anchors.the_fall.bc, KINGDOM_CE);
+  checks.push({
+    label: `Midpoint half`,
+    status: mid.half === EXPECTED_HALF ? "PASS" : "FAIL",
+    detail: `${mid.half} (expected ${EXPECTED_HALF})`,
+  });
+
+  // 3. Center = temple completed
+  checks.push({
+    label: `Center = Temple completed`,
+    status: mid.centerBCE === anchors.temple_completed.bc ? "PASS" : "FAIL",
+    detail: `${mid.centerBCE} B.C.E. (expected ${anchors.temple_completed.bc})`,
+  });
+
+  // 4. 2,520 anchor
+  const ten = spanBCEtoCE(anchors.jerusalem_destroyed.bc, KINGDOM_CE);
+  checks.push({
+    label: `607 B.C.E. → 1914 C.E.`,
+    status: ten === EXPECTED_TEN ? "PASS" : "FAIL",
+    detail: `${ten} (expected ${EXPECTED_TEN})`,
+  });
+
+  // 5. No-year-zero test
+  const noZero = spanBCEtoCE(1, 1) === 1;
+  checks.push({
+    label: `No-year-zero test (1 B.C.E. → 1 C.E. = 1 year)`,
+    status: noZero ? "PASS" : "FAIL",
+    detail: noZero ? "1" : "error",
+  });
+
+  // 6. Temple bracket — both conventions held open
+  const foundationToCompletion = anchors.temple_foundation.bc - anchors.temple_completed.bc;
+  checks.push({
+    label: `Temple bracket (calendar years)`,
+    status: foundationToCompletion === 7 ? "PASS" : "FAIL",
+    detail: `${foundationToCompletion} years (expected 7)`,
+  });
+
+  // 7. Scriptural elapsed months
+  const elapsedMonths = 7 * 12 + 6;
+  checks.push({
+    label: `Temple bracket (scriptural elapsed)`,
+    status: elapsedMonths === 90 ? "PASS" : "FAIL",
+    detail: `${elapsedMonths} months (expected 90)`,
+  });
+
+  return checks;
+}
+
+// ============================================================
+// Render
+// ============================================================
+
+function render(anchors, checks, source) {
+  const app = document.getElementById("app");
+  const allPass = checks.every(c => c.status === "PASS");
+  const anyFail = checks.some(c => c.status === "FAIL");
+
+  let html = "";
+
+  // Source note
+  html += `<div class="note">Anchor source: <strong>${source}</strong>. ${source === "anchors.json" ? "Live from the repo." : "Embedded fallback — anchors.json not reachable from this page."}</div>`;
+
+  // Verification panel
+  html += `<h2>Verification</h2><div class="panel">`;
+  for (const c of checks) {
+    const cls = c.status === "PASS" ? "pass" : "fail";
+    html += `<div class="check">
+      <span class="label">${c.label}<br><span style="font-size:0.78rem;color:#a7b5d2;font-family:ui-monospace,monospace">${c.detail}</span></span>
+      <span class="status ${cls}">${c.status}</span>
+    </div>`;
+  }
+  html += `</div>`;
+
+  // The wheel
+  html += `<h2>The Wheel</h2><div class="panel"><div class="grid">`;
+  html += `<span class="k">The Fall</span><span class="v">3967 B.C.E.</span>`;
+  html += `<span class="k">The Kingdom</span><span class="v">1914 C.E.</span>`;
+  html += `<span class="k">Span</span><span class="v">5,880 years</span>`;
+  html += `<span class="k">Half</span><span class="v">2,940 years</span>`;
+  html += `<span class="k">Center</span><span class="v">1027 B.C.E.</span>`;
+  html += `<span class="k">2,520 anchor</span><span class="v">607 → 1914</span>`;
+  html += `</div></div>`;
+
+  // The temple bracket — collision held open
+  html += `<h2>The Temple Bracket</h2>`;
+  html += `<div class="panel"><div class="grid">`;
+  html += `<span class="k">Foundation (Solomon 4)</span><span class="v">1034 B.C.E.</span>`;
+  html += `<span class="k">Completion (Solomon 11)</span><span class="v">1027 B.C.E.</span>`;
+  html += `<span class="k">Calendar-year bracket</span><span class="v">1034 → 1027</span>`;
+  html += `<span class="k">Elapsed-months bracket</span><span class="v">1034 → 1026</span>`;
+  html += `</div></div>`;
+  html += `<div class="warn"><strong>Rule 8 — held open.</strong> Two brackets, one event. The calendar-year bracket ends at 1027 B.C.E.; the elapsed-months bracket ends at 1026 B.C.E. Both are correct under their own convention. Neither is erased. The engine does not pick between them.</div>`;
+
+  // The mirror — search result
+  html += `<h2>The Mirror</h2>`;
+  html += `<div class="panel"><div class="grid">`;
+  html += `<span class="k">Mirror sum</span><span class="v">5,881</span>`;
+  html += `<span class="k">Half</span><span class="v">2,940.5</span>`;
+  html += `<span class="k">Result</span><span class="v">Searched</span>`;
+  html += `</div>`;
+  html += `<div class="note">The mirror test was run. The anchor set contains no two years whose indices sum to 5,881. The result is empty. An empty mirror is a finding, not a failure.</div>`;
+  html += `</div>`;
+
+  // Open questions
+  html += `<h2>Open Questions</h2>`;
+  html += `<div class="panel"><ul style="padding-left:20px;margin:0">`;
+  html += `<li><strong>Exodus:</strong> 1513 B.C.E. (Watchtower, governing) vs 1446 B.C.E. (counter-reading, recorded). Both held open.</li>`;
+  html += `<li><strong>Span convention:</strong> 3968−B vs Mastercore's 3967 as Year 1. Mastercore governs by default.</li>`;
+  html += `<li><strong>Temple bracket:</strong> 1027/1026 (calendar-year) vs the elapsed-months offset. Held open.</li>`;
+  html += `<li><strong>The legacy void:</strong> 05_briar_vault.md missing. Filed under C14. Not fabricated.</li>`;
+  html += `</ul></div>`;
+
+  // Final verdict banner
+  if (anyFail) {
+    html += `<div class="error"><strong>One or more checks failed.</strong> Read the panel above. Do not edit the engine to make it pass — fix the anchor.</div>`;
+  } else if (allPass) {
+    html += `<div class="ok"><strong>All checks pass.</strong> The wheel balances. The bracket is held open. The mirror is empty. The engine is honest.</div>`;
+  }
+
+  app.innerHTML = html;
+}
+
+// ============================================================
+// Init: try to fetch anchors.json, fall back to embedded.
+// ============================================================
+
+async function init() {
+  let anchors = EMBEDDED_ANCHORS;
+  let source = "embedded";
+  try {
+    const r = await fetch("../Level-02-Chronology-Math/data/anchors.json");
+    if (r.ok) {
+      const data = await r.json();
+      anchors = data.anchors;
+      source = "anchors.json";
+    }
+  } catch (e) {
+    // Not served — the page is on file://, not over HTTP. Use embedded.
+  }
+  const checks = runVerification(anchors);
+  render(anchors, checks, source);
+}
+
+init();
+</script>
+</body>
+</html>

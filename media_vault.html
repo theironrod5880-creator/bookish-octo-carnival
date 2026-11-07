@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Born In The Mud — Media Vault</title>
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#141414;color:#fff;padding:20px;line-height:1.6}
+h1,h2{color:#e50914;margin-top:0}
+.track{background:#1f1f1f;border:1px solid #333;border-radius:8px;padding:12px 15px;margin:10px 0;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.track strong{flex:1 1 220px;display:block}
+.track audio{flex:2 1 260px;width:100%}
+.state{flex:0 0 auto;font-size:11px;letter-spacing:1px;font-family:monospace;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+.state.ready{background:#12351c;color:#3fb950;border:1px solid #238636}
+.state.awaiting{background:#2b2412;color:#d29922;border:1px solid #9e6a03}
+.note{border:1px solid #d29922;background:#1c1a12;padding:12px;border-radius:6px;color:#e3b341;margin:15px 0;font-size:14px}
+.floor-strip{background:#0a1428;border:1px solid #d4af37;border-radius:6px;text-align:center;font-size:11px;letter-spacing:1px;padding:7px 12px;color:#d4af37;text-transform:uppercase;margin-bottom:20px}
+.floor-strip strong{color:#fff0a6}
+.nav-link{display:inline-block;margin-top:20px;padding:10px 15px;background:#e50914;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold}
+footer{text-align:center;color:#888;font-size:13px;margin-top:30px;border-top:1px solid #222;padding-top:20px}
+</style>
+</head>
+<body>
+
+<div class="floor-strip"><strong>The Floor</strong> &middot; Watchtower Society First &middot; NWT 1983 &middot; Tier Every Claim 1&ndash;4 &middot; Sealed Vaults Closed</div>
+
+<h1>Born In The Mud — Media Vault</h1>
+
+<div class="note">Drop files into <code>/media/</code> at repo root using the exact filenames below. Each player marks itself <em>READY</em> when its file resolves, <em>AWAITING FILE</em> when it does not. Served over HTTP the check is exact; opened from <code>file://</code> browsers may report inaccurately.</div>
+
+<h2>Audio Tracks</h2>
+
+<div class="track"><strong>The Day That Jesus Came</strong>
+  <audio controls preload="metadata" data-src="../media/The_Day_That_Jesus_Came.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Hide in the Hills</strong>
+  <audio controls preload="metadata" data-src="../media/Hide_in_the_Hills.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Let Your Kingdom Come</strong>
+  <audio controls preload="metadata" data-src="../media/Let_Your_Kingdom_Come.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Set Apart by God</strong>
+  <audio controls preload="metadata" data-src="../media/Set_Apart_by_God.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>The Source of My Stride</strong>
+  <audio controls preload="metadata" data-src="../media/The_Source_of_My_Stride.m4a" type="audio/mp4"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>They Will</strong>
+  <audio controls preload="metadata" data-src="../media/They_Will.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Time Mirrors Itself (Audiobook)</strong>
+  <audio controls preload="metadata" data-src="../media/Time_Mirrors_Itself.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Wheels in the Sky</strong>
+  <audio controls preload="metadata" data-src="../media/Wheels_in_the_Sky.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<div class="track"><strong>Your Day Is Near</strong>
+  <audio controls preload="metadata" data-src="../media/Your_Day_Is_Near.mp3" type="audio/mpeg"></audio>
+  <span class="state awaiting">Checking…</span></div>
+
+<h2>YouTube Documentary Metadata</h2>
+<p><strong>Channel:</strong> Born In The Mud (@BornInTheMud)</p>
+<p>Episode 1: "Born in the Mud — The Cell Where It Started"</p>
+<p>Episode 2: "God Rules Time — The Moon Dream"</p>
+<p>Episode 3: "Building a Witness in Time — How the Bible Dates Events"</p>
+
+<a href="../index.html" class="nav-link">&larr; Return to Main Portal Hub</a>
+
+<script>
+document.querySelectorAll('audio[data-src]').forEach(function (a) {
+  var state = a.parentNode.querySelector('.state');
+  function mark(cls, text) { state.className = 'state ' + cls; state.textContent = text; }
+  a.addEventListener('loadedmetadata', function () { mark('ready', 'Ready'); });
+  a.addEventListener('error', function () { mark('awaiting', 'Awaiting file'); });
+  a.src = a.getAttribute('data-src');
+  if (a.readyState >= 1) { mark('ready', 'Ready'); }
+  setTimeout(function () {
+    if (state.textContent === 'Checking…') { mark('awaiting', 'Awaiting file'); }
+  }, 4000);
+});
+</script>
+
+<footer>
+  <strong>THE COMMISSION</strong><br>
+  <em>“As you go, preach, saying: ‘The kingdom of the heavens has drawn near.’”</em> — Matthew 10:7 (NWT 1983)<br>
+  Your King Jesus Christ will be arriving soon.
+</footer>
+
+</body>
+</html>
